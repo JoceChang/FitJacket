@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ exercise.name }} | FitJacket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .badge-soft {
+      background-color: #e7f1ff;
+      color: #003366;
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin-right: 8px;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/">🏋️ FitJacket</a>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="/exercises/">Exercises</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="mt-4 mb-4">
+      <a href="/exercises/" class="btn btn-primary btn-sm">&larr; Back to Exercises</a>
+    </div>
+
+    <h2 class="mb-4">{{ exercise.name }}</h2>
+
+    <!-- Badges Row -->
+    <div class="mb-4 d-flex flex-wrap align-items-center">
+      {% if exercise.level %}
+        <span class="badge-soft">{{ exercise.level|title }}</span>
+      {% endif %}
+      {% if exercise.category %}
+        <span class="badge-soft">{{ exercise.category|title }}</span>
+      {% endif %}
+      {% if exercise.equipment %}
+        <span class="badge-soft">{{ exercise.equipment|title }}</span>
+      {% endif %}
+      {% for muscle in exercise.primaryMuscles %}
+        <span class="badge-soft">{{ muscle|title }}</span>
+      {% endfor %}
+    </div>
+
+    <!-- Instructions -->
+    <h5>Instructions:</h5>
+    {% if exercise.instructions %}
+      <ul class="mb-4">
+        {% for step in exercise.instructions %}
+          <li>{{ step }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No instructions available.</p>
+    {% endif %}
+
+    <!-- Images -->
+    <h5>Images:</h5>
+    <div class="row">
+      {% for img in exercise.image_urls %}
+        <div class="col-md-4 mb-3">
+          <img src="{{ img }}" class="img-fluid rounded border"
+               onerror="this.onerror=null; this.src='/static/default-exercise.jpg';">
+        </div>
+      {% empty %}
+        <p>No images available.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
